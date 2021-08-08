@@ -1,27 +1,31 @@
-const testButtonFunction=()=>{
-  alert('Thank you for clicking')
-}
-
-// connect to the socket
-
-let socket = io();
-
-
-socket.on('number', (msg) => {
-    console.log('Random number: ' + msg);
-})
-
-console.log('test')
 $(document).ready(function(){
-  console.log('Ready')
-  
-  //bind the button
-  $('#testButton').click(testButtonFunction)
 
-  //test get call
-  $.get('/test?user_name="Fantastic User"',(result)=>{
-    console.log(result)
-  })
+  const nav = document.getElementById('site-menu');
+  const header = document.getElementById('top');
 
+  window.addEventListener('scroll', function() {
+    if (window.scrollY >=400) { // adjust this value based on site structure and header image height
+      nav.classList.add('nav-sticky');
+      header.classList.add('pt-scroll');
+    } else {
+      nav.classList.remove('nav-sticky');
+      header.classList.remove('pt-scroll');
+    }
+  });
+
+  // get user name and user icon from App Id
+  $.getJSON('/home/api/idPayload', function (id_token) {
+    $('#userNameSpan').html(id_token.name);
+    $('#user-icon').attr('src',id_token.picture);
+  });
 
 })
+
+navToggle=()=>{
+  let btn = document.getElementById('menuBtn');
+  let nav = document.getElementById('menu');
+
+  btn.classList.toggle('open');
+  nav.classList.toggle('flex');
+  nav.classList.toggle('hidden');
+}

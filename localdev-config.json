@@ -1,0 +1,11 @@
+{
+  "clientId": "fcc99ce9-cd0f-4f2b-a48f-a67b4e49d8c7",
+  "oauthServerUrl": "https://us-south.appid.cloud.ibm.com/oauth/v4/6b269d51-8738-4156-b940-e1f301c44309",
+  "profilesUrl": "https://us-south.appid.cloud.ibm.com",
+  "secret": "MmIwZjNjZjktNTVlOS00NmU0LWFhZGQtNDc2OWU2NDdkMTBi",
+  "tenantId": "6b269d51-8738-4156-b940-e1f301c44309",
+  "type": "regularwebapp",
+  "redirectUri": "https://groupmarket.us-south.cf.appdomain.cloud/ibm/cloud/appid/callback",
+  "devRedirectUri":"http://localhost:8080/ibm/cloud/appid/callback"
+}
+

@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (max-width: 576px) {
+    .content {
+        padding-top: 51px;
+    }
+}
+
+@media (min-width: 577px) {
+    .pt-scroll {
+        padding-top: 51px;
+    }
+
+    .nav-sticky {
+        position: fixed!important;
+        min-width: 100%;
+        top: 0;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+        transition: all .25s ease-in;
+        z-index: 1;
+    }
+}
+
+.hamburger__top-bun,
+.hamburger__bottom-bun {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background: #000;
+    transform: rotate(0);
+    transition: all 0.5s;
+}
+
+.hamburger:hover [class*="-bun"] {
+    background: #333;
+}
+
+.hamburger__top-bun {
+    transform: translateY(-5px);
+}
+
+.hamburger__bottom-bun {
+    transform: translateY(3px);
+}
+
+.open {
+    transform: rotate(90deg);
+    transform: translateY(-1px);
+}
+
+.open .hamburger__top-bun {
+    transform: rotate(45deg) translateY(0px);
+}
+
+.open .hamburger__bottom-bun {
+    transform:rotate(-45deg) translateY(0px);
+}
+.rounded-row-item{
+    border-radius: 20px;
+}
+.float-btn{
+    position: fixed;
+    margin: auto;
+    right: 0px;
+    left: 0px;
+    bottom: 10px;
+}
+.create-link{
+    line-height: 32px;
+    margin-left: 10px;
+}
+.modal-container{
+    height: 50%;
+    position: absolute;
+    bottom: 0px;
+}
+.card_open {
+    animation-duration: .2s;
+    animation-name: card_open;
+}
+.spinner {
+    margin: 20px auto 0;
+    width: 70px;
+    text-align: center;
+}
+.spinner > div {
+    width: 18px;
+    height: 18px;
+    background-color: #333;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+select,select:focus{
+    outline: none;
+}
+.hasImage:hover section {
+    background-color: rgba(5, 5, 5, 0.4);
+}
+.hasImage:hover button:hover {
+    background: rgba(5, 5, 5, 0.45);
+}
+
+#overlay p,
+i {
+    opacity: 0;
+}
+
+#overlay.draggedover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+#overlay.draggedover p,
+#overlay.draggedover i {
+    opacity: 1;
+}
+
+.group:hover .group-hover\:text-blue-800 {
+    color: #2b6cb0;
+}
+.flex-break-upload{
+    flex-basis: unset;
+}
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0) }
+    40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    } 40% {
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+      }
+}
+@keyframes card_open {
+    from {
+        height: 1%;
+    }
+    to {
+        height: 100%;
+    }
+}
+@media (min-width: 768px){
+    .store-item-vertical{
+        margin-right: 30px;
+        width: calc(1/4*100% - (1 - 1/4)*30px);
+    }
+    .store-item-vertical:nth-child(4n) {
+        margin-right: 0px;
+    }
+    .flex-break-upload{
+        flex-basis: 100%!important;
+    }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>DT Cards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Compiled and minified CSS -->
+    <link href="/styles/styles.css" rel="stylesheet">
+</head>
+<body>
+<div class="home-page">
+    <header id="top" class="w-full flex flex-col fixed sm:relative bg-white pin-t pin-r pin-l z-10">
+        <nav id="site-menu" class="flex flex-col py-4 sm:flex-row w-full justify-between items-center px-4 sm:px-6 sm:py-1 bg-white shadow-none sm:shadow">
+            <div class="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
+                <button id="menuBtn" class="hamburger block sm:hidden focus:outline-none" type="button" onclick="navToggle();">
+                    <span class="hamburger__top-bun"></span>
+                    <span class="hamburger__bottom-bun"></span>
+                </button>
+                <div class="flex py-1">
+                    <span class="user-icon center">
+                         <img class="rounded-full" id="user-icon" src="/assets/icon/user.png" width="25" height="25">
+                     </span>
+                    <div class="ml-2"><span id="userNameSpan"></span></div>
+                </div>
+            </div>
+            <div id="menu" class="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden">
+                <a class="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:px-4 py-2 sm:py-1 sm:pt-2" href="#bottom">Features</a>
+                <a class="text-dark text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2" href="/logout" target="_blank">Logout</a>
+            </div>
+        </nav>
+    </header>
+</div>
+<!-- Compiled and minified JavaScript -->
+<script src="/js/lib/jquery-3.6.0.min.js"></script>
+<script src="/env.js"></script>
+<script src="./home.js"></script>
+</body>
+</html>

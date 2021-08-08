@@ -1,40 +1,93 @@
 let express = require("express");
+const session = require('express-session')
+const passport = require('passport');
+const WebAppStrategy = require("ibmcloud-appid").WebAppStrategy;
+const CALLBACK_URL = "/ibm/cloud/appid/callback";
+
 let app = express();
+let routes = require('./routes')
+let path = require('path');
 
-//var app = require('express')();
-let http = require('http').createServer(app);
-let io = require('socket.io')(http);
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://dbTest:dbTest@study.mqzkl.mongodb.net/reckoning?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect();
 
-
-
-
-
-var port = process.env.PORT || 8080;
+let port = process.env.PORT || 8080;
 
 app.use(express.static(__dirname + '/public'));
 
-app.get("/test", function (request, response) {
-  var user_name = request.query.user_name;
-  response.end("Hello " + user_name + "!");
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, './views'));
+
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
 });
 
+app.use('/', routes({client}));
 
-//socket test
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-  setInterval(()=>{
-    socket.emit('number', parseInt(Math.random()*10));
-  }, 1000);
+/** IBM APP ID for login and register **/
+app.use(session({
+	secret: "123456",
+	resave: true,
+	saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
+let webAppStrategy = new WebAppStrategy(getAppIDConfig());
+passport.use(webAppStrategy);
+
+passport.serializeUser(function(user, cb) {
+	cb(null, user);
 });
 
-
-http.listen(port,()=>{
-  console.log("Listening on port ", port);
+passport.deserializeUser(function(obj, cb) {
+	cb(null, obj);
 });
 
-//this is only needed for Cloud foundry 
+app.get(CALLBACK_URL, passport.authenticate(WebAppStrategy.STRATEGY_NAME, {failureRedirect: '/error'}));
+
+app.use("/home", passport.authenticate(WebAppStrategy.STRATEGY_NAME));
+
+// // This will statically serve the home page (after authentication, since /home is a home area):
+app.use('/home', express.static("home"));
+
+app.get("/logout", (req, res) => {
+	WebAppStrategy.logout(req);
+	res.redirect("/");
+});
+
+//Serves the identity token payload
+app.get("/home/api/idPayload", (req, res) => {
+	res.send(req.session[WebAppStrategy.AUTH_CONTEXT].identityTokenPayload);
+});
+
+app.get('/error', (req, res) => {
+	res.send('Authentication Error');
+});
+
+app.listen(port, () => {
+	console.log("Listening on port ", port);
+	//console.log(process.env.NODE_ENV)
+});
+
+function getAppIDConfig() {
+	let config;
+	try {
+		config = require('./localdev-config.json');
+		// if running locally we'll have the local config file
+		if(process.env.NODE_ENV == 'dev'){
+			config.redirectUri = config.devRedirectUri;
+		}
+	} catch (e) {
+		console.log(e)
+	}
+	return config;
+}
+
+//this is only needed for Cloud foundry
 require("cf-deployment-tracker-client").track();
