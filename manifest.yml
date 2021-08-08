@@ -1,5 +1,5 @@
 ---
 applications:
-- name:    hello-node
+- name:    community-marketplace
   random-route: true
   memory:  128M

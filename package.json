@@ -1,20 +1,38 @@
 {
-  "name": "bluemix-hello-node",
+  "name": "community-marketplace",
   "version": "0.0.0",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cf-deployment-tracker-client": "*",
     "commander": "^2.6.0",
+    "ejs": "^3.1.5",
     "express": "^4.14.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.8.0",
     "http-post": "^0.1.1",
     "http-proxy": "^1.8.1",
+    "ibmcloud-appid": "^6.1.1",
+    "moment": "^2.29.1",
+    "mongodb": "^3.6.3",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.6",
+    "passport": "^0.4.1",
+    "postcss-cli": "^8.3.1",
     "socket.io": "^2.3.0"
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "export NODE_ENV=production && nodemon server.js",
+    "dev": "export NODE_ENV=dev && nodemon server.js",
+    "build:css": "postcss public/styles/tailwind.css -o public/styles/styles.css"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/IBM-Bluemix/bluemix-hello-node.git"
+    "url": "https://github.com/Qiaoliwang2020/community-marketplace-nodejs.git"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.3",
+    "tailwindcss": "^2.1.4"
   }
 }
