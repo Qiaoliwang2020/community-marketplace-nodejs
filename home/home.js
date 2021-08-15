@@ -10,6 +10,10 @@ $(document).ready(function() {
         });
      }
      getUserInfo();
+
+    //  $('#uploadImg').on('click',function(){
+    //      console.log('iiiiiii');
+    //  })
 })
 
 

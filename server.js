@@ -15,6 +15,8 @@ client.connect();
 
 let port = process.env.PORT || 8080;
 
+app.use('/', routes({client}));
+
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
@@ -26,8 +28,6 @@ app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
 });
-
-app.use('/', routes({client}));
 
 /** IBM APP ID for login and register **/
 app.use(session({

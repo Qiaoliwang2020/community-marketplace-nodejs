@@ -98,6 +98,20 @@ gallery.onclick = ({ target }) => {
 
 // print all selected files
 document.getElementById("submit").onclick = () => {
-    alert(`Submitted Files:\n${JSON.stringify(FILES)}`);
+    
+    let formData = new FormData();
+    // console.log(typeof FILES,'file');
+    for (const key in FILES) {
+        formData.append('file',FILES[key], FILES[key].name,);
+        console.log(FILES[key].name);
+        $.ajax({
+            url: '/upload/uploadFile',
+            type: 'POST',
+            dataType: 'json',
+            processData: false,
+            data: formData
+        });
+    }
+
     console.log(FILES);
 };
