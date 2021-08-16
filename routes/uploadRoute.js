@@ -1,16 +1,13 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const ObjectId = require('mongodb').ObjectId;
+const fs = require('fs');
+const multer = require('multer');
 
 const router = express.Router();
 
-const multer = require('multer');
-const fs = require('fs');
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        fs.mkdir('./public/uploadFiles',(err)=>{
-            cb(null, './public/uploadFiles');
+        fs.mkdir('./uploads/',(err)=>{
+            cb(null, './uploads/');
         });
     },
     filename: (req, file, cb) => {
@@ -25,28 +22,26 @@ module.exports = params => {
 
     const {client} = params;
 
-    // logic
     router.get('/',async (req, res, next) =>{
         console.log(`upload root hit`)
     })
-   
 
-    router.post('/uploadFile',uploadStorage.single('file'),async (req, res, next) =>{
-        console.log(req,'res');
-        // if(req.file){
-        //     // res.json({message:'inserted'})
-        //     // let file = {
-        //     //     fileName:req.file.originalname,
-        //     //     filePath:req.file.path,
-        //     //     type:req.file.mimetype,
-        //     //     size:req.file.size,
-        //     //     status:uid.status,
-        //     //     created:new Date().getTime()
-        //     // }
-        //     // client.db("reckoning").collection("uploadFiles").insertOne(file,(err,results)=>{
-        //     //     res.json({message:'inserted'})
-        //     // })
-        // }
+    router.post("/uploadFile", uploadStorage.single("image"), (req, res,next) => {
+        if (req.file) { 
+            let file = {
+                fileName:req.file.originalname,
+                filePath:req.file.path,
+                type:req.file.mimetype,
+                size:req.file.size,
+                created:new Date().getTime()
+            }
+            client.db("reckoning").collection("uploadFiles").insertOne(req.file,(err,result)=>{
+                console.log(result,'res');
+                res.end('Thank you for the file'); 
+            })
+        }else{
+         res.json({error:'Missing file'}); 
+        } 
     })
     return router;
 }

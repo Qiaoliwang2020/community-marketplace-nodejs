@@ -97,21 +97,22 @@ gallery.onclick = ({ target }) => {
 };
 
 // print all selected files
-document.getElementById("submit").onclick = () => {
-    
+document.getElementById("submit").onclick = (e) => {
+    e.preventDefault();
     let formData = new FormData();
-    // console.log(typeof FILES,'file');
+
     for (const key in FILES) {
-        formData.append('file',FILES[key], FILES[key].name,);
-        console.log(FILES[key].name);
+        formData.append("image",FILES[key], FILES[key].name);
+        //console.log(FILES[key],'key');
         $.ajax({
             url: '/upload/uploadFile',
-            type: 'POST',
-            dataType: 'json',
+            type: 'post',
+            data: formData,
+            async: true,
+            cache: false,
+            contentType: false,
             processData: false,
-            data: formData
         });
     }
-
-    console.log(FILES);
+    //console.log(FILES);
 };
