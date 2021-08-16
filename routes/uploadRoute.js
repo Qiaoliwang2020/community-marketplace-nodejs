@@ -6,8 +6,8 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        fs.mkdir('./uploads/',(err)=>{
-            cb(null, './uploads/');
+        fs.mkdir('./public/uploads/',(err)=>{
+            cb(null, './public/uploads/');
         });
     },
     filename: (req, file, cb) => {
@@ -35,9 +35,9 @@ module.exports = params => {
                 size:req.file.size,
                 created:new Date().getTime()
             }
-            client.db("reckoning").collection("uploadFiles").insertOne(req.file,(err,result)=>{
+            client.db("reckoning").collection("uploadFiles").insertOne(file,(err,result)=>{
                 console.log(result,'res');
-                res.end('Thank you for the file'); 
+                res.json({path:req.file.path}); 
             })
         }else{
          res.json({error:'Missing file'}); 

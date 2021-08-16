@@ -1,8 +1,9 @@
 $(document).ready(function(){
-    renderStoreList();
+
+    getAllActivities();
+
     $('.tab .tab-item').on('click',function (){
         tabChangeStyle($(this));
-        loading()
     })
 
     const card_open = document.getElementById('card_open')
@@ -38,18 +39,28 @@ $(document).ready(function(){
     card_open.addEventListener('click', modalState)
     card_close.addEventListener('click', modalState)
 });
-renderStoreList = () =>{
+
+getAllActivities = () =>{
+    loading();
+    $.get('/activities/getActivities',(result)=>{
+        if(result.success){
+            renderStoreList(result.data);
+        }
+    })
+}
+renderStoreList = (data) =>{
+    let href =  $(location).attr('href');
     $('.store-list').empty();
-    for(let i = 0 ; i <  5; i++) {
+    for(let i = 0 ; i <  data.length; i++) {
         let list = `<div class="store-item-vertical mt-5">
                 <div class="max-w-2xl mx-auto bg-white rounded-row-item shadow-md overflow-hidden">
                     <div class="flex md:block">
                         <div class="flex-shrink-0">
-                            <img class="h-36 w-36  object-cover md:w-full" src="https://images.unsplash.com/photo-1506374322094-6021fc3926f1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8c3lkbmV5fGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" alt="Man looking at item at a store">
+                            <img class="h-36 w-36  object-cover md:w-full" src="${href+data[i].thumbs[0]}" alt="${data[i].title}">
                         </div>
                         <div class="p-4">
-                            <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Big Mouth Burgers</a>
-                            <p class="mt-2 text-gray-500">American food</p>
+                            <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">${data[i].title}</a>
+                            <p class="mt-2 text-gray-500">${data[i].description}</p>
                             <p class="mt-2 text-gray-500">1.6</p>
                         </div>
                     </div>

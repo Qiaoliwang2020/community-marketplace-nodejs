@@ -99,9 +99,12 @@ gallery.onclick = ({ target }) => {
 // print all selected files
 document.getElementById("submit").onclick = (e) => {
     e.preventDefault();
-    let formData = new FormData();
+
+    let imagePath = []; 
 
     for (const key in FILES) {
+
+        let formData = new FormData();
         formData.append("image",FILES[key], FILES[key].name);
         //console.log(FILES[key],'key');
         $.ajax({
@@ -112,7 +115,10 @@ document.getElementById("submit").onclick = (e) => {
             cache: false,
             contentType: false,
             processData: false,
+            success: function(result){
+              imagePath.push(result.path);
+              $('#gallery').attr('images', imagePath);
+            }
         });
     }
-    //console.log(FILES);
 };
