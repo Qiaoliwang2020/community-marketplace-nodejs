@@ -37,7 +37,7 @@ module.exports = params => {
             }
             client.db("MarketPlace").collection("uploadFiles").insertOne(file,(err,result)=>{
                 console.log(result,'res');
-                res.json({path:req.file.path}); 
+                res.json({success:true,path:req.file.path}); 
             })
         }else{
          res.json({error:'Missing file'}); 

@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    window.Toast('failed','hi');
     getUserInfo =()=>{
         // user info from app id
         $.getJSON('/home/api/idPayload', function (id_token) {
@@ -34,10 +33,22 @@ $(document).ready(function() {
              thumbs:images,
          }
          $.post('/activities/createActivities',data,(res)=>{
-             console.log(res,'res');
-             window.Toast('failed','hi');
+             if(res.success){
+                window.Toast('success',res.data.info);
+             }
+             else{
+                window.Toast('failed',res);
+             }
+             backToHome();
          })
      })
+     backToHome =()=>{
+         let timer;
+         timer = setTimeout((()=>{
+            location.replace('/');
+            clearTimeout(timer);
+        }),2500)
+     }
 })
 
 

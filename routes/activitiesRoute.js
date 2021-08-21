@@ -26,7 +26,7 @@ module.exports = params => {
 
       const result = await client.db("MarketPlace").collection("activities").insertOne(activity);
 
-      return res.status(200).send("success")
+      return res.json({success:true,data:{info:'inserted'}});
 
     } catch (err) {
       console.log("Error when create new area", err);
@@ -38,7 +38,7 @@ module.exports = params => {
     try{
         await client.db("reckoning").collection("activities").find().toArray(function (err,result) {
             if (err) throw err;
-            res.json({success:true,data:result});
+            return res.json({success:true,data:result});
         })
     }
     catch (err) {

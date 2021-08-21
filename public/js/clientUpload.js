@@ -118,6 +118,7 @@ document.getElementById("submit").onclick = (e) => {
             success: function(result){
               imagePath.push(result.path);
               $('#gallery').attr('images', imagePath);
+              window.Toast('success','uploaded');
             }
         });
     }
