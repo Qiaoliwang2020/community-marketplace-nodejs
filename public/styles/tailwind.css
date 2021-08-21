@@ -115,16 +115,16 @@ select,select:focus{
     background: rgba(5, 5, 5, 0.45);
 }
 
-#overlay p,
+.upload-overlay p,
 i {
     opacity: 0;
 }
 
-#overlay.draggedover {
+.upload-overlay.draggedover {
     background-color: rgba(255, 255, 255, 0.7);
 }
-#overlay.draggedover p,
-#overlay.draggedover i {
+.upload-overlay.draggedover p,
+.upload-overlay.draggedover i {
     opacity: 1;
 }
 

@@ -1,145 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Community Marketplace</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Compiled and minified CSS -->
     <link href="/styles/styles.css" rel="stylesheet">
 </head>
+
 <body>
-<div class="home-page">
-    <header id="top" class="w-full flex flex-col fixed sm:relative bg-white pin-t pin-r pin-l z-10">
-        <nav id="site-menu" class="flex flex-col py-4 sm:flex-row w-full justify-between items-center px-4 sm:px-6 sm:py-1 bg-white shadow-none sm:shadow">
-            <div class="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
-                <button id="menuBtn" class="hamburger block sm:hidden focus:outline-none" type="button" onclick="navToggle();">
-                    <span class="hamburger__top-bun"></span>
-                    <span class="hamburger__bottom-bun"></span>
-                </button>
-                <div class="flex py-1">
-                    <span class="user-icon center">
-                         <img class="rounded-full" id="user-icon" src="/assets/icon/user.png" width="25" height="25">
-                     </span>
-                    <div class="ml-2"><span id="userNameSpan"></span></div>
+    <div class="home-page">
+        <header id="top" class="w-full flex flex-col fixed sm:relative bg-white pin-t pin-r pin-l z-10">
+            <nav id="site-menu"
+                class="flex flex-col py-4 sm:flex-row w-full justify-between items-center px-4 sm:px-6 sm:py-1 bg-white shadow-none sm:shadow">
+                <div
+                    class="w-full sm:w-auto self-start sm:self-center flex flex-row sm:flex-none flex-no-wrap justify-between items-center">
+                    <button id="menuBtn" class="hamburger block sm:hidden focus:outline-none" type="button"
+                        onclick="navToggle();">
+                        <span class="hamburger__top-bun"></span>
+                        <span class="hamburger__bottom-bun"></span>
+                    </button>
+                    <div class="flex py-1">
+                        <span class="user-icon center">
+                            <img class="rounded-full" id="user-icon" src="/assets/icon/user.png" width="25" height="25">
+                        </span>
+                        <div class="ml-2"><span id="userNameSpan"></span></div>
+                    </div>
+                </div>
+                <div id="menu"
+                    class="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden">
+                    <a class="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:px-4 py-2 sm:py-1 sm:pt-2"
+                        href="/">Home</a>
+                    <a class="text-dark text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2"
+                        href="/logout" target="_blank">Logout</a>
+                </div>
+            </nav>
+        </header>
+        <div class="container mx-auto px-4 pt-20">
+            <div class="group-buy-form">
+                <div>
+                    <label class="block" for="title">Title</label>
+                    <input id="title" name="title"
+                        class="w-full text-md bg-gray-100 pl-4 pr-4 pt-1 pb-1 mt-2 rounded-full focus:outline-none"
+                        type="text" />
+                </div>
+                <div class="mt-6">
+                    <label class="block" for="description">Description</label>
+                    <textarea id="description"
+                        class="w-full h-32 text-md bg-gray-100 pl-4 pr-4 pt-1 pb-1 mt-2 rounded-md focus:outline-none"></textarea>
+                </div>
+                <div class="mt-6">
+                    <label class="block">Upload Images(Product Images or retailer Logo)</label>
+                    <!-- file upload modal -->
+                    <article aria-label="File Upload Modal" class="" ondrop="dropHandler(event);"
+                        ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);"
+                        ondragenter="dragEnterHandler(event);">
+                        <!-- overlay -->
+                        <div id="overlay"
+                            class="upload-overlay w-full h-full absolute top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md">
+                            <i>
+                                <svg class="fill-current w-12 h-12 mb-3 text-blue-700"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path
+                                        d="M19.479 10.092c-.212-3.951-3.473-7.092-7.479-7.092-4.005 0-7.267 3.141-7.479 7.092-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h13c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408zm-7.479-1.092l4 4h-3v4h-2v-4h-3l4-4z" />
+                                </svg>
+                            </i>
+                            <p class="text-lg text-blue-700">Drop files to upload</p>
+                        </div>
+
+                        <!-- scroll area -->
+                        <section class="h-full overflow-auto w-full h-full flex flex-wrap py-4 px-1">
+                            <ul id="gallery" class="gallery flex flex-1 flex-wrap -m-1">
+                                <li
+                                    class="flex-break-upload block p-1 w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-32 rounded-md border-gray-400 flex flex-col justify-center items-center md:py-12 md:px-12 md:border-dashed md:border-2 md:flex-1 md:mt-2">
+                                    <p class="hidden mb-3 font-semibold text-gray-900 flex-wrap justify-center md:flex">
+                                        <span>Drag and drop your files anywhere or</span>
+                                    </p>
+                                    <input id="hidden-input" type="file" multiple class="hidden" />
+                                    <button id="addImage"
+                                        class="w-full h-full rounded-md bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none md:mt-1 md:w-full md:h-12 md:rounded-full">
+                                        <span class="hidden md:block">upload a file</span>
+                                        <span class="block md:hidden">十</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </section>
+                    </article>
+                </div>
+                <div class="mt-6">
+                    <button id="addItems"
+                        class="modal-open w-full rounded-full px-3 py-1 bg-black hover:bg-gray-500 text-white focus:shadow-outline focus:outline-none">Add
+                        items</button>
+                </div>
+                <div class="mt-6">
+                    <button id="nextStep"
+                        class="rounded-full w-full py-2 bg-black hover:bg-gray-500 text-white focus:shadow-outline focus:outline-none">Next</button>
                 </div>
             </div>
-            <div id="menu" class="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden">
-                <a class="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:px-4 py-2 sm:py-1 sm:pt-2" href="/">Home</a>
-                <a class="text-dark text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2" href="/logout" target="_blank">Logout</a>
-            </div>
-        </nav>
-    </header>
-    <div class="container mx-auto px-4 pt-20">
-        <div class="group-buy-form">
-            <div class="">
-                <label class="block" for="title">Title</label>
-                <input id="title" name="title" class="w-full text-md bg-gray-100 pl-4 pr-4 pt-1 pb-1 mt-2 rounded-full focus:outline-none" type="text"/>
-            </div>
-            <div class="mt-6">
-                <label class="block" for="description">Description</label>
-                <textarea id="description" class="w-full h-32 text-md bg-gray-100 pl-4 pr-4 pt-1 pb-1 mt-2 rounded-md focus:outline-none"></textarea>
-            </div>
-            <div class="mt-6">
-                <label class="block">Upload Images(Product Images or retailer Logo)</label>
-                <!-- file upload modal -->
-                <article aria-label="File Upload Modal" class="" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);" ondragenter="dragEnterHandler(event);">
-                    <!-- overlay -->
-                    <div id="overlay" class="w-full h-full absolute top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md">
-                        <i>
-                            <svg class="fill-current w-12 h-12 mb-3 text-blue-700" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path d="M19.479 10.092c-.212-3.951-3.473-7.092-7.479-7.092-4.005 0-7.267 3.141-7.479 7.092-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h13c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408zm-7.479-1.092l4 4h-3v4h-2v-4h-3l4-4z" />
-                            </svg>
-                        </i>
-                        <p class="text-lg text-blue-700">Drop files to upload</p>
-                    </div>
+        </div>
+        <template id="image-template">
+            <li class="block p-1 w-32 h-32">
+                <article tabindex="0"
+                    class="group hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm">
+                    <img alt="upload preview"
+                        class="img-preview w-full h-full sticky object-cover rounded-md bg-fixed" />
 
-                    <!-- scroll area -->
-                    <section class="h-full overflow-auto w-full h-full flex flex-wrap py-4 px-1">
-                        <ul id="gallery" class="flex flex-1 flex-wrap -m-1">
-                            <li class="flex-break-upload block p-1 w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-32 rounded-md border-gray-400 flex flex-col justify-center items-center md:py-12 md:px-12 md:border-dashed md:border-2 md:flex-1 md:mt-2">
-                                <p class="hidden mb-3 font-semibold text-gray-900 flex-wrap justify-center md:flex">
-                                    <span>Drag and drop your files anywhere or</span>
-                                </p>
-                                <input id="hidden-input" type="file" multiple class="hidden" />
-                                <button id="button" class="w-full h-full rounded-md bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none md:mt-1 md:w-full md:h-12 md:rounded-full">
-                                    <span class="hidden md:block">upload a file</span>
-                                    <span class="block md:hidden">十</span>
-                                </button>
-                            </li>
-                        </ul>
+                    <section class="flex flex-col rounded-md text-xs break-words w-full h-full z-10 absolute top-0">
+                        <h1 class="flex-1"></h1>
+                        <div class="flex text-white bg-gray-900 bg-opacity-40 px-2 py-1 rounded-b-md">
+                            <span class="p-1">
+                                <i>
+                                    <svg class="fill-current w-4 h-4 ml-auto pt-" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24">
+                                        <path
+                                            d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" />
+                                    </svg>
+                                </i>
+                            </span>
+
+                            <p class="p-1 size text-xs"></p>
+                            <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md">
+                                <svg class="pointer-events-none fill-current w-4 h-4 ml-auto"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path class="pointer-events-none"
+                                        d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
+                                </svg>
+                            </button>
+                        </div>
                     </section>
                 </article>
-            </div>
-            <!-- <div class="mt-6">
-                <button class="mr-2 rounded-full px-3 py-1 bg-black hover:bg-gray-500 text-white focus:shadow-outline focus:outline-none">import item</button>
-                <button class="rounded-full px-3 py-1 bg-black hover:bg-gray-500 text-white focus:shadow-outline focus:outline-none">create item</button>
-            </div> -->
-            <div>
-                <button id="nextStep" class="rounded-full w-full py-2 bg-black hover:bg-gray-500 text-white focus:shadow-outline focus:outline-none">Next</button>
+            </li>
+        </template>
+        <!--Modal-->
+        <div
+            class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+            <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+            <div class="bg-white rounded-md w-4/5 z-50 md:w-1/3 min-w-max">
+                <div
+                    class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                    <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                        viewBox="0 0 18 18">
+                        <path
+                            d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                        </path>
+                    </svg>
+                    <span class="text-sm">(Esc)</span>
+                </div>
+                <div class="modal-content py-4 text-left px-6">
+                    <!--Title-->
+                    <div class="flex justify-between items-center pb-3">
+                        <p class="text-2xl font-bold">Add Item</p>
+                        <div class="modal-close cursor-pointer z-50">
+                            <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18"
+                                height="18" viewBox="0 0 18 18">
+                                <path
+                                    d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                    <!--Body-->
+                    <div class="mt-4">
+                        <div class="flex items-center mt-2">
+                            <label class="block mr-2" for="Itemname">Name</label>
+                            <input id="Itemname" name="Itemname"
+                                class="w-full text-md bg-gray-100 pl-4 pr-4 pt-1 pb-1 mt-2 rounded-full focus:outline-none"
+                                type="text" />
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <label class=" block mr-2" for="Price">Price</label>
+                            <input id="Price" name="Price"
+                                class="w-full text-md bg-gray-100 pl-4 pr-4 pt-1 pb-1 mt-2 rounded-full focus:outline-none"
+                                type="text" />
+                        </div>
+                        <div class="mt-2">
+                            <label class=" block mr-2" for="ItemDes">Description</label>
+                            <textarea id="ItemDes"
+                                class="w-full h-24 text-md bg-gray-100 pl-4 pr-4 pt-1 pb-1 mt-2 rounded-md focus:outline-none"></textarea>
+                        </div>
+                        <div class="mt-2 max-w-xl relative">
+                            <label class=" block mr-2" for="ItemPic">Item pictures</label>
+                            <!-- file upload modal -->
+                            <article aria-label="File Upload Modal" class="" ondrop="dropHandler(event);"
+                                ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);"
+                                ondragenter="dragEnterHandler(event);">
+                                <!-- overlay -->
+                                <div id="item-overlay"
+                                    class="upload-overlay w-full h-full absolute top-0 left-0 pointer-events-none z-50 flex flex-col items-center justify-center rounded-md">
+                                    <i>
+                                        <svg class="fill-current w-12 h-12 mb-3 text-blue-700"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path
+                                                d="M19.479 10.092c-.212-3.951-3.473-7.092-7.479-7.092-4.005 0-7.267 3.141-7.479 7.092-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h13c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408zm-7.479-1.092l4 4h-3v4h-2v-4h-3l4-4z" />
+                                        </svg>
+                                    </i>
+                                    <p class="text-lg text-blue-700">Drop files to upload</p>
+                                </div>
+
+                                <!-- scroll area -->
+                                <section class="h-full overflow-auto w-full h-full flex flex-wrap py-4 px-1 mt-4">
+                                    <ul id="item-gallery" class="gallery flex flex-1 flex-wrap -m-1">
+                                        <li
+                                            class="block p-1 w-32 h-32 rounded-md border-gray-400 flex flex-col justify-center items-center">
+                                            <input id="item-file-input" type="file" multiple class="hidden" />
+                                            <button id="item-add-image"
+                                                class="w-full h-full rounded-md bg-gray-200 hover:bg-gray-300 focus:shadow-outline focus:outline-none">
+                                                <span class="block">十</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </section>
+                            </article>
+                        </div>
+                    </div>
+                    <!--Footer-->
+                    <div class="flex justify-end pt-2">
+                        <button
+                            class="px-4 bg-transparent p-1 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Add</button>
+                        <button
+                            class="modal-close px-4 bg-indigo-500 p-1 rounded-lg text-white hover:bg-indigo-400">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <template id="image-template">
-        <li class="block p-1 w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-32">
-            <article tabindex="0" class="group hasImage w-full h-full rounded-md focus:outline-none focus:shadow-outline bg-gray-100 cursor-pointer relative text-transparent hover:text-white shadow-sm">
-                <img alt="upload preview" class="img-preview w-full h-full sticky object-cover rounded-md bg-fixed" />
-
-                <section class="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0">
-                    <h1 class="flex-1 px-3 py-2"></h1>
-                    <div class="flex text-white bg-gray-900 bg-opacity-40 px-2 py-1 rounded-b-md">
-              <span class="p-1">
-                <i>
-                  <svg class="fill-current w-4 h-4 ml-auto pt-" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M5 8.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5zm9 .5l-2.519 4-2.481-1.96-4 5.96h14l-5-8zm8-4v14h-20v-14h20zm2-2h-24v18h24v-18z" />
-                  </svg>
-                </i>
-              </span>
-
-                        <p class="p-1 size text-xs"></p>
-                        <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md">
-                            <svg class="pointer-events-none fill-current w-4 h-4 ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path class="pointer-events-none" d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
-                            </svg>
-                        </button>
-                    </div>
-                </section>
-            </article>
-        </li>
-    </template>
-    <!-- using two similar templates for simplicity in js code -->
-    <template id="file-template">
-        <li class="block p-1 w-1/3 md:w-1/4 lg:w-1/6 xl:w-1/8 h-32">
-            <article tabindex="0" class="group w-full h-full rounded-md focus:outline-none focus:shadow-outline elative bg-gray-100 cursor-pointer relative shadow-sm">
-                <img alt="upload preview" class="img-preview hidden w-full h-full sticky object-cover rounded-md bg-fixed" />
-
-                <section class="flex flex-col rounded-md text-xs break-words w-full h-full z-20 absolute top-0 py-2 px-3">
-                    <h1 class="flex-1 group-hover:text-blue-800"></h1>
-                    <div class="flex">
-              <span class="p-1 text-blue-800">
-                <i>
-                  <svg class="fill-current w-4 h-4 ml-auto pb-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
-                  </svg>
-                </i>
-              </span>
-                        <p class="p-1 size text-xs text-gray-700"></p>
-                        <button class="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md text-gray-800">
-                            <svg class="pointer-events-none fill-current w-4 h-4 ml-auto" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path class="pointer-events-none" d="M3 6l3 18h12l3-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.316c0 .901.73 2 1.631 2h5.711z" />
-                            </svg>
-                        </button>
-                    </div>
-                </section>
-            </article>
-        </li>
-    </template>
-</div>
-<!-- Compiled and minified JavaScript -->
-<script src="/js/lib/jquery-3.6.0.min.js"></script>
-<script src="/env.js"></script>
-<script src="/js/clientUpload.js"></script>
-<script src="/js/toast.js"></script>
-<script src="./home.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="/js/lib/jquery-3.6.0.min.js"></script>
+    <script src="/env.js"></script>
+    <script src="/js/clientUpload.js"></script>
+    <script src="/js/toast.js"></script>
+    <script src="/js/modal.js"></script>
+    <script src="./home.js"></script>
 </body>
+
 </html>

@@ -10,9 +10,12 @@ $(document).ready(function () {
         });
     }
     getUserInfo();
+
+
     let errors = [];
     let title = $('#title'),
         description = $('#description');
+    let activityFiles = {}, itemFiles = {};    
 
     title.on('change', (e) => {
         validationValue({ name: 'title', value: e.target.value })
@@ -22,10 +25,40 @@ $(document).ready(function () {
         validationValue({ name: 'description', value: e.target.value })
     })
 
+    // initialize activity images upload
+    let uploadOptions = {
+        galleryID:"gallery",
+        overlayID:"overlay",
+        fileInputID:"hidden-input",
+        addButtonID:"addImage",
+    }
+    function getActivityFiles(files) {
+        activityFiles ={};
+        activityFiles = files;
+        console.log(activityFiles,'11111');
+     }
+    clientUpload(uploadOptions,getActivityFiles);
+
+    // initialize items images upload
+    let productUpload = {
+        galleryID:"item-gallery",
+        overlayID:"item-overlay",
+        fileInputID:"item-file-input",
+        addButtonID:"item-add-image",
+    }
+
+    function getItemFiles(files) {
+        itemFiles = {};
+        itemFiles = files;
+     }
+    clientUpload(productUpload,getItemFiles);
+
     $('#nextStep').on('click', function () {
+        validationValue({ name: 'title', value: title[0].value })
+        validationValue({ name: 'description', value: description[0].value })
         if (errors.length === 0) {
-            if (window.FILES) {
-                uploadImages(window.FILES);
+            if (activityFiles) {
+                uploadImages(activityFiles);
             }
             else {
                 window.Toast('failed', 'Images is required');
@@ -89,6 +122,13 @@ $(document).ready(function () {
             window.Toast('failed', `${data.name} is required `);
             errors.push(data.name);
         }
+    }
+
+    addItems =()=>{
+        const modal = document.querySelector('.modal')
+        modal.classList.toggle('opacity-0')
+        modal.classList.toggle('pointer-events-none')
+        body.classList.toggle('modal-active')
     }
 })
 
