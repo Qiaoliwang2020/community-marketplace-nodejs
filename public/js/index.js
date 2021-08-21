@@ -59,7 +59,7 @@ renderStoreList = (data) =>{
                             <img class="h-36 w-36  object-cover md:w-full" src="${imgSrc}" alt="${data[i].title}">
                         </div>
                         <div class="p-4">
-                            <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">${data[i].title}</a>
+                            <a href="/activity?id=${data[i]._id}" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">${data[i].title}</a>
                             <p class="mt-2 text-gray-500">${data[i].description}</p>
                             <p class="mt-2 text-gray-500">1.6</p>
                         </div>
