@@ -1,21 +1,32 @@
-<div class="w-full pt-16">
-   <div style="background: url(<%= activityData[0].thumbs[0].replace('public/','/')  %>) center center no-repeat" class="w-full h-56"></div>
-
-   <div class="activity-details-view">
-       
-    <%= activityData[0]._id %>
+<div class="w-full pt-16 md:pt-0">
+    <div class="w-full h-48 absolute" style="background: url(<%= activityData[0].thumbs[0].replace('public/','/')  %>) 0 center no-repeat;background-size:cover;filter:grayscale(100%);" ></div>
+    <div class="activity-details-view" style="backdrop-filter: blur(10px);">
+        <figure class="md:flex p-8 md:p-0">
+            <img class="w-32 h-32 md:w-48 md:h-auto md:m-10 md:rounded rounded-full mx-auto shadow-lg" src="<%= activityData[0].thumbs[0].replace('public/','/')  %>" alt=""
+                width="384" height="512">
+            <div class="pt-6 md:p-8 text-center md:text-left space-y-4" >
+                <blockquote>
+                    <p class="text-lg font-semibold w-full">
+                        <%= activityData[0].description %>
+                    </p>
+                </blockquote>
+                <figcaption class="font-medium">
+                    <div class="text-cyan-600">
+                        <%= activityData[0].title %>
+                    </div>
+                    <div class="text-gray-500">
+                        location
+                    </div>
+                </figcaption>
+            </div>
+        </figure>
+        <!-- <%= activityData[0]._id %> -->
+    </div>
+    <!-- <div>
+        <%= activityData[0].createTime %>
+            <%= activityData[0].description %>
+                <%= activityData[0].expire %>
+                    <%= activityData[0].thumbs[0] %>
+                        <%= activityData[0].title %>
+    </div> -->
 </div>
-<div>
-    <%= activityData[0].createTime  %>
-    <%= activityData[0].description  %>
-    <%= activityData[0].expire  %>
-    <%= activityData[0].thumbs[0]  %>
-    <%= activityData[0].title %>
-</div>
-
-              
-</div>
-
-
-
-
