@@ -50,25 +50,29 @@ getAllActivities = () =>{
 }
 renderStoreList = (data) =>{
     $('.store-list').empty();
-    for(let i = 0 ; i <  data.length; i++) {
-        let imgSrc= data[i].thumbs[0].replace('public/','/');
-        let list = `<div class="store-item-vertical mt-5">
-                <div class="max-w-2xl mx-auto bg-white rounded-row-item shadow-md overflow-hidden">
-                    <div class="flex md:block">
-                        <div class="flex-shrink-0">
-                            <img class="h-36 w-36  object-cover md:w-full" src="${imgSrc}" alt="${data[i].title}">
-                        </div>
-                        <div class="p-4">
-                            <a href="/activity?id=${data[i]._id}" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">${data[i].title}</a>
-                            <p class="mt-2 text-gray-500">${data[i].description}</p>
-                            <p class="mt-2 text-gray-500">1.6</p>
+    if(data.length > 0){
+        for(let i = 0 ; i <  data.length; i++) {
+            let imgSrc= data[i].thumbs[0].replace('public/','/');
+            let list = `<div class="store-item-vertical mt-5">
+                    <div class="max-w-2xl mx-auto bg-white rounded-row-item shadow-md overflow-hidden">
+                        <div class="flex md:block">
+                            <div class="flex-shrink-0">
+                                <img class="h-36 w-36  object-cover md:w-full" src="${imgSrc}" alt="${data[i].title}">
+                            </div>
+                            <div class="p-4">
+                                <a href="/activity?id=${data[i]._id}" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">${data[i].title}</a>
+                                <p class="mt-2 text-gray-500">${data[i].description}</p>
+                                <p class="mt-2 text-gray-500">1.6</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>`
-        $('.store-list').append(list);
-    }
+                </div>`
+            $('.store-list').append(list);
 
+        } 
+    }else{
+        $('.store-list').append('<div class="w-full h-32 text-center text-gray-500">No Actities</div>');
+    }
 }
 listLoading = ()=>{
     $('.store-list').empty();
