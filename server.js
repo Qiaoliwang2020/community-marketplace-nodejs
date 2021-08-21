@@ -9,7 +9,7 @@ let routes = require('./routes')
 let path = require('path');
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dbTest:dbTest@study.mqzkl.mongodb.net/reckoning?retryWrites=true&w=majority";
+const uri = "mongodb://127.0.0.1:27017/MarketPlace";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect();
 

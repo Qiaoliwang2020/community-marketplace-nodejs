@@ -35,7 +35,7 @@ module.exports = params => {
                 size:req.file.size,
                 created:new Date().getTime()
             }
-            client.db("reckoning").collection("uploadFiles").insertOne(file,(err,result)=>{
+            client.db("MarketPlace").collection("uploadFiles").insertOne(file,(err,result)=>{
                 console.log(result,'res');
                 res.json({path:req.file.path}); 
             })
