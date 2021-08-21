@@ -24,7 +24,7 @@ module.exports = params => {
     activity.expire = moment().add(1, 'years').calendar();
     try {
 
-      const result = await client.db("reckoning").collection("activities").insertOne(activity);
+      const result = await client.db("MarketPlace").collection("activities").insertOne(activity);
 
       return res.status(200).send("success")
 

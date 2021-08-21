@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+    window.Toast('failed','hi');
     getUserInfo =()=>{
         // user info from app id
         $.getJSON('/home/api/idPayload', function (id_token) {
@@ -35,6 +35,7 @@ $(document).ready(function() {
          }
          $.post('/activities/createActivities',data,(res)=>{
              console.log(res,'res');
+             window.Toast('failed','hi');
          })
      })
 })
