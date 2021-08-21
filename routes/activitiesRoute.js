@@ -36,7 +36,7 @@ module.exports = params => {
 
   router.get('/getActivities',async (req, res, next) =>{
     try{
-        await client.db("reckoning").collection("activities").find().toArray(function (err,result) {
+        await client.db("MarketPlace").collection("activities").find().toArray(function (err,result) {
             if (err) throw err;
             return res.json({success:true,data:result});
         })
