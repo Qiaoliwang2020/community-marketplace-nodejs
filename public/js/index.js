@@ -60,9 +60,15 @@ renderStoreList = (data) =>{
                                 <img class="h-36 w-36  object-cover md:w-full" src="${imgSrc}" alt="${data[i].title}">
                             </div>
                             <div class="p-4">
-                                <a href="/activity?id=${data[i]._id}" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">${data[i].title}</a>
+                                <a href="/activity?id=${data[i]._id}" class="block mt-1 text-lg leading-tight capitalize font-medium text-black hover:underline">${data[i].title}</a>
                                 <p class="mt-2 text-gray-500">${data[i].description}</p>
-                                <p class="mt-2 text-gray-500">1.6</p>
+                                <p class="mt-2 text-gray-500 capitalize flex items-center">
+                                <svg class="h-4 w-4 text-gray-500 mr-1"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                ${data[i].location}
+                                </p>
                             </div>
                         </div>
                     </div>

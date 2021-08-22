@@ -14,7 +14,9 @@ $(document).ready(function () {
 
     let errors = [];
     let title = $('#title'),
-        description = $('#description');
+        description = $('#description'),
+        retailerLocation = $('#location'),
+        sectors = $('#sectors');
     let activityFiles = {}, itemFiles = {};    
 
     title.on('change', (e) => {
@@ -23,6 +25,13 @@ $(document).ready(function () {
 
     description.on('change', (e) => {
         validationValue({ name: 'description', value: e.target.value })
+    })
+    retailerLocation.on('change', (e) => {
+        validationValue({ name: 'location', value: e.target.value })
+    })
+
+    sectors.on('change', (e) => {
+        validationValue({ name: 'industry sectors', value: e.target.value })
     })
 
     // initialize activity images upload
@@ -54,8 +63,11 @@ $(document).ready(function () {
     clientUpload(productUpload,getItemFiles);
 
     $('#nextStep').on('click', function () {
-        validationValue({ name: 'title', value: title[0].value })
-        validationValue({ name: 'description', value: description[0].value })
+        validationValue({ name: 'industry sectors', value: sectors[0].value  });
+        validationValue({ name: 'location', value: retailerLocation[0].value });
+        validationValue({ name: 'description', value: description[0].value });
+        validationValue({ name: 'title', value: title[0].value });
+
         if (errors.length === 0) {
             if (activityFiles) {
                 uploadImages(activityFiles);
@@ -93,27 +105,35 @@ $(document).ready(function () {
                 success: function (result) {
                     imagePath.push(result.path);
                     window.Toast('success', 'uploaded');
-                    submitActivity(imagePath)
+                    submitActivity(imagePath);
+    
                 }
             });
         }
     }
 
-    submitActivity = (images) => {
+    submitActivity = (images) => {       
         let data = {
             title: title[0].value,
             description: description[0].value,
             thumbs: images,
+            location:retailerLocation[0].value,
+            sectors:sectors[0].value,
         }
-        $.post('/activities/createActivities', data, (res) => {
-            if (res.success) {
-                window.Toast('success', res.data.info);
+        $.ajax({
+            url: '/activities/createActivities',
+            type: 'post',
+            data: data,
+            success: function (res) {
+                if (res.success) {
+                    window.Toast('success', res.data.info);
+                }
+                else {
+                    window.Toast('failed', res);
+                }
+                //backToHome();
             }
-            else {
-                window.Toast('failed', res);
-            }
-            backToHome();
-        })
+        });
     }
 
     validationValue = (data) => {
