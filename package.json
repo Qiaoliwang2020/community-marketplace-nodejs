@@ -35,7 +35,8 @@
     "postcss": "^8.3.3",
     "tailwindcss": "^2.1.4"
   },
+  "private": false,
   "engines": {
-    "node": "6.16.0"
+    "node": "^7.10.0"
   }
 }
