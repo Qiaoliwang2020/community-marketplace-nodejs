@@ -15,10 +15,17 @@ $(document).ready(function(){
 
   // get user name and user icon from App Id
   $.getJSON('/home/api/idPayload', function (id_token) {
-    $('#userNameSpan').html(id_token.name);
-    $('#user-icon').attr('src',id_token.picture);
+    let authed = `<div class="flex py-1">
+        <span class="user-icon center">
+            <img class="rounded-full" id="user-icon" src="${id_token.picture ? id_token.picture : '/assets/icon/user.png'}" width="25" height="25">
+        </span>
+        <div class="ml-2"><span id="userNameSpan">${id_token.name}</span></div>
+    </div>`
+    $('.menu-auth').empty();
+    if(id_token){
+      $('.menu-auth').append(authed)
+    }
   });
-
 })
 
 navToggle=()=>{
