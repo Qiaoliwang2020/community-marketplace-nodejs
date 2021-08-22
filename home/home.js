@@ -131,7 +131,7 @@ $(document).ready(function () {
                 else {
                     window.Toast('failed', res);
                 }
-                //backToHome();
+                backToHome();
             }
         });
     }
